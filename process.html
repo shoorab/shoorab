@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>process Gallery</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    body {
+      background: #fff;
+      color: #252525;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0 0 56px 0;
+    }
+    h1 {
+      text-align: center;
+      font-weight: bold;
+      margin: 34px 0 20px 0;
+      letter-spacing: 0.02em;
+    }
+    /* ---- Main Picture ---- */
+    .main-picture-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto 35px auto;
+      max-width: 900px;
+      box-sizing: border-box;
+      padding: 28px 10px 15px 10px;
+      background: #f5f5fa;
+      border-radius: 17px;
+      box-shadow: 0 2px 23px 0 rgba(40,60,90,0.10);
+    }
+    .main-picture-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 650px;
+      width: 98vw;
+      overflow-x: auto;
+      margin-bottom: 9px;
+      position: relative;
+    }
+    .main-picture-img {
+      width: 100%;
+      max-width: 520px;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 11px;
+      background: #ececf5;
+      border: 1px solid #dadada;
+      box-shadow: 0 2px 18px 0 rgba(110,110,130,0.12);
+      cursor: zoom-in;
+      transition: box-shadow .22s;
+    }
+    .main-picture-img:hover {
+      box-shadow: 0 8px 30px 0 rgba(30,70,140,0.18);
+    }
+    .main-picture-caption {
+      font-size: 1em;
+      color: #55557a;
+      margin-top: 9px;
+      word-break: break-all;
+      text-align: center;
+      font-family: 'Consolas', 'Segoe UI', monospace, Arial;
+      opacity: .94;
+      user-select: text;
+    }
+    /* ---- Gallery ---- */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px 25px;
+      margin: 0 auto;
+      justify-content: center;
+      max-width: 1450px;
+    }
+    .gallery figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 230px;
+      background: #f6f8fa;
+      margin: 0;
+      padding: 17px 8px 10px 8px;
+      border-radius: 13px;
+      box-shadow: 0 2px 13px 0 rgba(40,60,90,0.09);
+      transition: box-shadow .22s;
+      position:relative;
+    }
+    .gallery figure:hover {
+      box-shadow: 0 7px 23px 0 rgba(30,70,140,0.12);
+    }
+    .gallery img {
+      width: 186px;
+      height: 186px;
+      max-width: 98vw;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #e5e5ee;
+      margin-bottom: 12px;
+      border: 1px solid #d7d7e2;
+      transition: filter 0.17s;
+      box-shadow: 0 1.5px 8px 0 rgba(120,110,130,0.09);
+      cursor: pointer;
+    }
+    .gallery figcaption {
+      font-size: .98em;
+      color: #50506a;
+      word-break: break-all;
+      text-align: center;
+      opacity: .93;
+      direction: ltr;
+      font-family: 'Consolas', 'Segoe UI', monospace, Arial;
+      letter-spacing: 0.01em;
+      margin-top: 0;
+      margin-bottom: 2px;
+      user-select: text;
+    }
+    @media (max-width: 850px) {
+      .main-picture-box { max-width: 99vw; }
+      .main-picture-img { max-width: 98vw; }
+    }
+    @media (max-width: 600px) {
+      .main-picture-area { max-width: 99vw; padding: 11px 1vw 12px 1vw;}
+      .main-picture-img { max-width: 98vw; }
+      .gallery figure { width: 99vw; }
+      .gallery img { width: 81vw; height: 81vw;}
+    }
+
+    /* ---- Lightbox ---- */
+    .lightbox-backdrop {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      z-index: 9911;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(35,35,50,0.92);
+      backdrop-filter: blur(2.5px);
+      transition: opacity .22s;
+    }
+    .lightbox-backdrop.visible { display: flex; }
+    .lightbox-main {
+      max-width: 94vw;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 1;
+    }
+    .lightbox-img-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 86vw;
+      max-height: 74vh;
+      overflow: auto;
+      background: #222;
+      border-radius: 10px;
+    }
+    .lightbox-img {
+      max-width: 100vw;
+      max-height: 75vh;
+      width:auto;
+      height:auto;
+      object-fit: contain;
+      border-radius: 9px;
+      box-shadow: 0 4px 40px 0 rgba(70,90,210,0.18), 0 1px 8px 0 #0006;
+      background: #282832;
+      cursor: grab;
+      user-select: none;
+      transition: box-shadow .18s;
+    }
+    .lightbox-caption {
+      color: #eee;
+      background: none;
+      font-size: 1.07em;
+      margin: 13px 6px 0 6px;
+      padding: 7px 15px 7px 15px;
+      border-radius: 7px;
+      text-align: center;
+      max-width: 97vw;
+      word-break: break-all;
+      font-family: Consolas, 'Segoe UI', monospace, Arial;
+      opacity: .98;
+      text-shadow: 1px 2px 10px #000a;
+      user-select:text;
+    }
+    .lightbox-close, .lightbox-arrow {
+      position: absolute;
+      top: 11px;
+      z-index: 10;
+      background: rgba(30,30,45,0.48);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 2.06em;
+      cursor: pointer;
+      transition: background .19s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+      outline: none;
+    }
+    .lightbox-close:hover { background: #e22c36; }
+    .lightbox-close { right: 17px; }
+    .lightbox-arrow {
+      top: 47%;
+      background: rgba(0,0,0,0.28);
+      width: 44px;
+      height: 44px;
+      font-size: 2.6em;
+      user-select: none;
+    }
+    .lightbox-arrow.left { left: 10px; }
+    .lightbox-arrow.right { right: 10px; }
+    @media (max-width: 768px) {
+      .lightbox-main { max-width: 99vw; }
+      .lightbox-img-wrap { max-width: 99vw; }
+      .lightbox-arrow { font-size: 1.85em; width: 36px; height:36px;}
+    }
+  </style>
+</head>
+<body>
+  <h1>process</h1>
+  <!-- Main Picture Area -->
+  <div class="main-picture-area" id="mainPictureArea" style="display:none;">
+    <div class="main-picture-box" id="mainPictureBox">
+      <img class="main-picture-img" id="mainPictureImg" src="" alt="Main Picture" title="" tabindex="0" draggable="false">
+    </div>
+    <div class="main-picture-caption" id="mainPictureCaption"></div>
+  </div>
+  <div class="gallery" id="gallery"></div>
+
+  <!-- Lightbox Overlay -->
+  <div class="lightbox-backdrop" id="lightbox" tabindex="-1" aria-modal="true">
+    <div class="lightbox-main">
+      <button class="lightbox-arrow left" id="lbPrev" aria-label="Previous">&lsaquo;</button>
+      <div class="lightbox-img-wrap">
+        <img class="lightbox-img" id="lbImg" draggable="false" alt="">
+      </div>
+      <button class="lightbox-arrow right" id="lbNext" aria-label="Next">&rsaquo;</button>
+      <button class="lightbox-close" id="lbClose" title="Close (Esc)">&times;</button>
+      <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    let files = [], current = 0, mainIdx = 0;
+    const gallery = document.getElementById('gallery');
+    // Main picture area
+    const mainPictureArea = document.getElementById('mainPictureArea');
+    const mainPictureImg = document.getElementById('mainPictureImg');
+    const mainPictureCaption = document.getElementById('mainPictureCaption');
+
+    // Lightbox stuff
+    const lbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const lbClose = document.getElementById('lbClose');
+
+    fetch('assets/process/list.php')
+      .then(res => res.json())
+      .then(data => {
+        files = data;
+        if (!files.length) {
+          gallery.innerHTML = "<div style='color:#888;font-size:1.13em;text-align:center'>No images found!</div>";
+          mainPictureArea.style.display = 'none';
+          return;
+        }
+        // نمایش Main Picture اول
+        setMainPicture(0);
+
+        mainPictureArea.style.display = 'flex';
+
+        mainPictureImg.onclick = function() { openLbox(mainIdx); };
+        mainPictureImg.onkeydown = function(e){ if(e.key==='Enter'||e.key===' ') openLbox(mainIdx); };
+
+        files.forEach((filename, i) => {
+          const figure = document.createElement('figure');
+          const img = document.createElement('img');
+          img.src = 'assets/process/' + filename;
+          img.alt = filename;
+          img.title = filename;
+          img.tabIndex = 0;
+          img.setAttribute('draggable','false');
+          img.className = 'gallery-thumb';
+          img.addEventListener('click', () => setMainPicture(i));
+          img.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') setMainPicture(i);
+          });
+
+          const caption = document.createElement('figcaption');
+          caption.textContent = filename;
+          figure.appendChild(img);
+          figure.appendChild(caption);
+          gallery.appendChild(figure);
+        });
+      })
+      .catch(() => {
+        gallery.innerHTML = "<div style='color:#f44'>Error loading images!</div>";
+      });
+
+    // Main Picture functionality
+    function setMainPicture(idx) {
+      mainIdx = idx;
+      mainPictureImg.src = 'assets/process/' + files[mainIdx];
+      mainPictureImg.alt = files[mainIdx];
+      mainPictureImg.title = files[mainIdx];
+      mainPictureCaption.textContent = files[mainIdx];
+    }
+
+    // لایت باکس کد قبلی: مشابه نسخه‌های حرفه‌ای قبلی
+    let lightboxCurrent = 0, zoomLevel = 1;
+    function openLbox(idx) {
+      lightboxCurrent = idx;
+      setLboxImage();
+      lbox.classList.add('visible');
+      lbox.focus();
+      document.body.style.overflow='hidden';
+    }
+
+    function closeLbox() {
+      lbox.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    function setLboxImage() {
+      if (!files[lightboxCurrent]) return;
+      lbImg.src = 'assets/process/' + files[lightboxCurrent];
+      lbImg.alt = files[lightboxCurrent];
+      lbImg.title = files[lightboxCurrent];
+      lbCaption.textContent = files[lightboxCurrent];
+      lbImg.style.transform = 'scale(1)';
+      lbImg.parentElement.scrollTop = 0;
+      zoomLevel = 1;
+    }
+
+    lbPrev.onclick = e => { e.stopPropagation(); showPrev(); };
+    lbNext.onclick = e => { e.stopPropagation(); showNext(); };
+    lbClose.onclick = e => { e.stopPropagation(); closeLbox(); };
+    lbox.onclick = e => { if(e.target === lbox) closeLbox(); };
+
+    function showPrev() {
+      if (!files.length) return;
+      lightboxCurrent = (lightboxCurrent - 1 + files.length) % files.length;
+      setLboxImage();
+    }
+    function showNext() {
+      if (!files.length) return;
+      lightboxCurrent = (lightboxCurrent + 1) % files.length;
+      setLboxImage();
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if (!lbox.classList.contains('visible')) return;
+      if (e.key === 'Escape') closeLbox();
+      else if (e.key === 'ArrowLeft') showPrev();
+      else if (e.key === 'ArrowRight') showNext();
+      else if ((e.key === '+' || e.key === '='|| e.key === 'z') && e.ctrlKey) { zoomImg(0.16);}
+      else if ((e.key === '-' || e.key === '_') && e.ctrlKey) { zoomImg(-0.16);}
+    });
+
+    lbImg.addEventListener('wheel', function(e){
+      if (Math.abs(e.deltaY) > 2) {
+        e.preventDefault();
+        let dz = e.deltaY > 0 ? -0.13 : 0.13;
+        zoomImg(dz);
+      }
+    }, {passive:false});
+    function zoomImg(dz) {
+      zoomLevel = Math.max(0.3, Math.min(zoomLevel + dz, 7));
+      lbImg.style.transform = `scale(${zoomLevel})`;
+    }
+    lbImg.addEventListener('dblclick', function(e){
+      zoomLevel=1; lbImg.style.transform='scale(1)';
+      lbImg.parentElement.scrollTop=0;
+    });
+
+    let startX = 0;
+    lbImg.parentElement.addEventListener('mousedown', function(e){
+      startX = e.pageX;
+    });
+    lbImg.parentElement.addEventListener('mouseup', function(e){
+      if (Math.abs(e.pageX - startX) > 60) {
+        if (e.pageX < startX) showNext(); else showPrev();
+      }
+    });
+
+    lbox.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeLbox();
+    });
+
+    lbImg.ondragstart = () => false;
+
+  </script>
+</body>
+</html>

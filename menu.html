@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu | My Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .header { text-align: center; margin: 44px 14px 22px 14px; }
+    .header h1 { margin: 0 0 8px 0; font-size: 2.2em; font-weight: 700; }
+    .header p { margin: 0 0 19px 0; color: #444; font-size: 1.13em; }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      justify-content: center;
+      padding: 38px 10px 25px 10px;
+      flex: 1 0 auto;
+    }
+    .menu-item {
+      border-radius: 13px;
+      padding: 35px 36px 26px 36px;
+      min-width: 220px;
+      min-height: 145px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fbfbfa;
+      transition: box-shadow 0.17s;
+      box-shadow: 0 1px 14px 0 rgba(80,80,80,0.055);
+      border:none;
+    }
+    .menu-item:hover {
+      box-shadow: 0 5px 23px 0 rgba(90,90,90,0.12);
+    }
+
+    .menu-cover {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8.5px;
+      margin-bottom: 18px;
+      filter: grayscale(100%);
+      transition: filter 0.32s;
+      box-shadow: none;
+      background: none;
+      border: none;
+      outline: none;
+      display: block;
+    }
+    .menu-item:hover .menu-cover {
+      filter: grayscale(0%);
+    }
+    .menu-title {
+      font-size: 1.23em;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin-bottom: 4px;
+    }
+
+    /* hover-panel: فقط ردیف افقی عکس بدون هیچ پس‌زمینه یا حاشیه */
+    .hover-panel {
+      display: none;
+      position: absolute;
+      left: 50%; top: 100%;
+      transform: translateX(-50%);
+      margin-top: 12px;
+      padding: 0;
+      z-index: 10;
+      gap: 3px;
+      background: none;
+      border:none;
+      box-shadow:none;
+      min-width: unset;
+      flex-wrap: nowrap;
+    }
+    .menu-item:hover .hover-panel {
+      display: flex;
+    }
+    .hover-panel img {
+      width: 22px;
+      height: 22px;
+      object-fit: cover;
+      border-radius: 3.5px;
+      border: none;
+      box-shadow: none;
+      background: none;
+      margin: 0;
+      filter: grayscale(90%);
+      display: block;
+    }
+
+    /*Everything you can imagine is real. */
+    .quote-section {
+      font-size: 1.22em;
+      color: #212121;
+      text-align: center;
+      font-style: italic;
+      margin: 38px 15px 0 15px;
+      opacity: 1;
+      font-weight: 400;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+      background: none;
+    }
+    .quote-text {font-size:1.26em;}
+    .quote-author {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.08em;
+      color: #777;
+      opacity: 0.95;
+      font-style: normal;
+      letter-spacing: 0.03em;
+      font-family: Georgia,serif;
+    }
+
+    .footer {
+      font-size: 0.99em;
+      color: #888;
+      text-align: center;
+      margin-top: 41px;
+      margin-bottom: 18px;
+      padding-bottom: 0;
+      flex-shrink: 0;
+    }
+    .footer-nav {
+      margin-top:11px;
+    }
+    .footer-nav a {
+      color:#888;text-decoration:none;padding:0 7px;transition:color .15s;
+    }
+    .footer-nav a:hover {color:#000;text-decoration:underline;}
+    .social {
+      margin:8px 0 3px 0;
+    }
+    .social a {
+      color:#666;text-decoration:none;padding:0 6px;transition:color .15s;
+    }
+    .social a:hover {color:#111;}
+    .back-link {
+      display:block;
+      margin:19px auto 0 8vw;
+      font-size:1.02em;
+      color:#222;
+      text-decoration:none;
+      max-width:160px;
+      padding:7px 14px;
+      border-radius:7px;
+    }
+    .back-link:hover {background:#f0f0f3;}
+    @media (max-width: 830px) {
+      .menu { gap: 15px; }
+      .menu-item { padding: 10px 4px 3px 4px; min-width: 109px;}
+      .menu-cover { width: 75px; height: 75px;}
+    }
+
+    /* اطمینان از اینکه فوتر همیشه ته صفحه باشه */
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .menu, .header, .quote-section {
+      flex-shrink: 0;
+    }
+    .footer {
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Project Menu</h1>
+    <p>Select a category to explore each body of work.</p>
+  </div>
+  <a class="back-link" href="index.html">&larr; Back to Home</a>
+
+  <div class="menu">
+    <div class="menu-item" data-category="ArtistBook.html">
+      <img class="menu-cover" src="assets/ArtistBook1.jpg" alt="Artist Book Cover">
+      <div class="menu-title">Artist Book</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Drawing.html">
+      <img class="menu-cover" src="assets/Drawing1.jpg" alt="Drawing Cover">
+      <div class="menu-title">Drawing</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Performance.html">
+      <img class="menu-cover" src="assets/Performance1.jpg" alt="Event & Performances Cover">
+      <div class="menu-title">Event & Performances</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Exhibition.html">
+      <img class="menu-cover" src="assets/Exhibition1.jpg" alt="Exhibition Cover">
+      <div class="menu-title">Exhibition</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Experience.html">
+      <img class="menu-cover" src="assets/Experience1.jpg" alt="Experience Cover">
+      <div class="menu-title">Experience</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Process.html">
+      <img class="menu-cover" src="assets/Process1.jpg" alt="Process Cover">
+      <div class="menu-title">Process</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Sculpture.html">
+      <img class="menu-cover" src="assets/Sculpture1.jpg" alt="Sculpture Cover">
+      <div class="menu-title">Sculpture</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Sketch.html">
+      <img class="menu-cover" src="assets/Sketch1.jpg" alt="Sketch Cover">
+      <div class="menu-title">Sketch</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Sketchbook.html">
+      <img class="menu-cover" src="assets/Sketchbook1.jpg" alt="Sketchbook Cover">
+      <div class="menu-title">Sketchbook</div>
+      <div class="hover-panel"></div>
+    </div>
+    <div class="menu-item" data-category="Yellow.html">
+      <img class="menu-cover" src="assets/Yellow1.jpg" alt="Yellow Cover">
+      <div class="menu-title">Yellow</div>
+      <div class="hover-panel"></div>
+    </div>
+  </div>
+
+  <div class="quote-section">
+    <span class="quote-text">
+      "You can only see what you observe, nothing more and nothing less."
+    </span>
+    <span class="quote-author">— Richard Serra</span>
+  </div>
+  <div class="footer">
+    © 2025 Hosein Shoorab. All rights reserved.
+    <div class="footer-nav">
+      <a href="#">About</a> · 
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="social">
+      <a href="https://instagram.com/shoorrab" target="_blank">Instagram</a> |
+      <a href="mailto:shoorab1998@gmail.com">Email</a> |
+      <a href="https://mail.google.com/mail/?view=cm&to=shoorab1998@gmail.com" target="_blank">Gmail</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+  <script>
+    // تعداد تصادفی بین 8 تا 12
+    function randomCount(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    const slidesData = {
+      ArtistBook:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+      AtTheBeginning:[1,2,3,4,5,6,7,8,9,10],
+      Drawing:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+      EventPerformance:[1,2,3,4,5,6,7,8,9,10,11,12],
+      Exhibition:[1,2,3,4,5,6,7,8,9,10,11],
+      Experience:[1,2,3,4,5,6,7,8,9,10,11,12],
+      Process:[1,2,3,4,5,6,7,8,9,10,11,12],
+      Sculpture:[1,2,3,4,5,6,7,8,9,10,11,12],
+      Sketch:[1,2,3,4,5,6,7,8,9,10],
+      Sketchbook:[1,2,3,4,5,6,7,8,9,10,11,12],
+      Yellow:[1,2,3,4,5,6,7,8,9,10]
+    };
+    document.querySelectorAll('.menu-item').forEach(item=>{
+      const hoverPanel = item.querySelector('.hover-panel');
+      item.addEventListener('mouseenter', ()=>{
+        const htmlFile = item.dataset.category;
+        const cat = htmlFile.replace('.html','');
+        const available = slidesData[cat] || [];
+        // exclude 1 (کاور)
+        const candidates = available.filter(n=>n!==1);
+        if(!candidates.length){hoverPanel.style.display='none';return;}
+        let count = Math.min(Math.max(8, randomCount(8,12)),candidates.length);
+        // shuffle
+        for(let i = candidates.length-1; i>0; i--) {
+          const j = Math.floor(Math.random()*(i+1));
+          [candidates[i],candidates[j]]=[candidates[j],candidates[i]];
+        }
+        const selected = candidates.slice(0,count);
+        hoverPanel.innerHTML='';
+        selected.forEach(idx=>{
+          const img=document.createElement('img');
+          img.src=`assets/${cat}/${cat}${idx}.jpg`;img.alt=`${cat}`;
+          hoverPanel.appendChild(img);
+        });
+        hoverPanel.style.display='flex';
+      });
+      item.addEventListener('mouseleave', ()=>{
+        hoverPanel.innerHTML = '';
+        hoverPanel.style.display='none';
+      });
+      item.addEventListener('click', ()=>{
+        let category = item.dataset.category;
+        if(category && category.endsWith('.html')) window.location.href = category;
+      })
+    });
+  </script>
+</body>
+</html>
