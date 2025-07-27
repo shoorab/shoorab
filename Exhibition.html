@@ -103,28 +103,31 @@
       .then(r=>r.json())
       .then(list=>{
         const listDiv = document.getElementById('exhibitionList');
-        list
-          .sort((a,b)=>parseInt(a)-parseInt(b))
-          .forEach(ex => {
-            const a = document.createElement('a');
-            a.className = 'exhibition-card';
-            a.href = `ExhibitionDetail.html?ex=${ex}`;
-            const img = document.createElement('img');
-            img.className = 'exhibition-cover';
-            img.src = `assets/Exhibition/${ex}/cover.jpg`;
-            img.alt = `Exhibition ${ex} cover`;
-            img.onerror = () => { img.src = 'assets/cover-placeholder.png' }
-            a.appendChild(img);
-            const title = document.createElement('span');
-            title.className = 'exhibition-title';
-            title.textContent = `Exhibition ${ex}`;
-            a.appendChild(title);
-            const num = document.createElement('span');
-            num.className = 'exhibition-num';
-            num.textContent = `#${ex}`;
-            a.appendChild(num);
-            listDiv.appendChild(a);
-          });
+        // اگر خروجی آبجکت باشه (همونطور که قراره باشه)
+        list.forEach(ex => {
+          // ex -> { title, folder, cover, images }
+          const a = document.createElement('a');
+          a.className = 'exhibition-card';
+          a.href = `ExhibitionDetail.html?exhibition=${encodeURIComponent(ex.folder)}`;
+          const img = document.createElement('img');
+          img.className = 'exhibition-cover';
+          img.src = `assets/Exhibition/${ex.cover}`;
+          img.alt = ex.title || ex.folder;
+          img.onerror = () => { img.src = 'assets/cover-placeholder.png' }
+          a.appendChild(img);
+          const title = document.createElement('span');
+          title.className = 'exhibition-title';
+          title.textContent = ex.title || ex.folder;
+          a.appendChild(title);
+          const num = document.createElement('span');
+          num.className = 'exhibition-num';
+          num.textContent = `#${ex.folder}`;
+          a.appendChild(num);
+          listDiv.appendChild(a);
+        });
+        if(list.length === 0){
+          listDiv.innerHTML = '<div>No exhibitions found.</div>';
+        }
       });
   </script>
 </body>

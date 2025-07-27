@@ -4,248 +4,40 @@
   <meta charset="UTF-8">
   <title>Exhibition Detail</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #fafafa;
-      margin: 0;
-      padding: 0;
-      color: #222;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto 24px auto;
-      padding: 0 12px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      margin-bottom: 28px;
-    }
-    .exhibition-list {
-      display: flex;
-      gap: 22px;
-      overflow-x: auto;
-      padding: 14px 0 30px 0;
-      justify-content: center;
-      align-items: flex-end;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 32px;
-      background: #fff;
-    }
-    .exhibition-thumb-wrap {
-      text-align: center;
-      min-width: 70px;
-    }
-    .exhibition-thumb {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid #eee;
-      transition: border 0.15s;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 3px auto;
-      background: #f6f6f6;
-    }
-    .exhibition-thumb.active {
-      border: 2.2px solid #000;
-      box-shadow: 0 2px 8px #2222;
-    }
-    .exhibition-number {
-      display: block;
-      text-align: center;
-      font-size: 13px;
-      color: #666;
-      margin-top: 0;
-    }
-    .exhibition-details {
-      background: #fff;
-      border-radius: 13px;
-      padding: 28px 24px 32px 24px;
-      box-shadow: 0 2px 14px #aaa3;
-      margin: 0 0 32px 0;
-    }
-    .exhibition-title {
-      font-size: 1.25em;
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #333;
-    }
-    .exhibition-desc {
-      font-size: 1.05em;
-      color: #444;
-      margin-bottom: 18px;
-      white-space: pre-line;
-    }
-    .gallery-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 13px;
-    }
-    .gallery-img {
-      width: 180px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 9px;
-      box-shadow: 0 1px 7px #0001;
-      cursor: pointer;
-      background: #f2f2f2;
-      transition: transform 0.14s, box-shadow 0.14s;
-    }
-    .gallery-img:hover {
-      transform: scale(1.07);
-      box-shadow: 0 3px 17px #2222;
-    }
-    /* Lightbox */
-    .lightbox-overlay {
-      display: none;
-      position: fixed;
-      z-index: 99;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(32,32,44,0.91);
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px);
-      transition: background 0.2s;
-    }
-    .lightbox-overlay.show {
-      display: flex;
-      animation: fadein 0.4s;
-    }
-    @keyframes fadein {
-      from { opacity: 0;}
-      to { opacity: 1;}
-    }
-    .lightbox-content {
-      position: relative;
-      max-width: 95vw;
-      max-height: 87vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: popin 0.2s cubic-bezier(.31,.7,.66,1.43);
-      user-select: none;
-    }
-    @keyframes popin {
-      from {transform: scale(0.98); opacity: 0.5;}
-      to {transform: scale(1); opacity: 1;}
-    }
-    .lightbox-img-wrap {
-      position: relative;
-      background: #fff;
-      border-radius: 13px;
-      max-width: 88vw;
-      max-height: 63vh;
-      overflow: hidden;
-      box-shadow: 0 10px 44px #13161f7a;
-      margin-bottom: 16px;
-      display: flex; align-items: center; justify-content: center;
-      touch-action: pinch-zoom; /* for mobile */
-    }
-    .lightbox-img {
-      max-width: 86vw;
-      max-height: 61vh;
-      border-radius: 13px;
-      background: #fff;
-      object-fit: contain;
-      transition: box-shadow .18s;
-      will-change: transform;
-      cursor: grab;
-      margin: 0 auto;
-      display: block;
-    }
-    .lightbox-caption {
-      color: #fff;
-      margin-bottom: 15px;
-      font-size: 1.1em;
-      text-align: center;
-      text-shadow: 0 2px 12px #000a;
-      max-width: 77vw;
-      min-height: 1.5em;
-    }
-    .lightbox-close, .lightbox-prev, .lightbox-next {
-      position: absolute;
-      border: none;
-      background: rgba(32,32,44,0.75);
-      color: #fff;
-      border-radius: 50%;
-      width: 38px; height: 38px;
-      top: 7px;
-      font-size: 1.55em;
-      cursor: pointer;
-      z-index: 2;
-      display: flex;
-      align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px #0002;
-      transition: background .12s, transform .12s;
-    }
-    .lightbox-close {
-      right: 10px;
-      font-size: 2em;
-      top: -18px;
-      background: #d00f;
-      color: #fff;
-    }
-    .lightbox-prev, .lightbox-next {
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(48,48,70,0.83);
-      color: #fff;
-      font-size: 1.7em;
-      opacity: 0.87;
-    }
-    .lightbox-prev:hover, .lightbox-next:hover { background: #333; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #fafafa; margin: 0; padding: 0; color: #222;}
+    .container { max-width: 900px; margin: 40px auto 24px auto; padding: 0 12px;}
+    h1 { text-align: center; font-size: 2em; margin-bottom: 28px;}
+    .exhibition-list { display: flex; gap: 22px; overflow-x: auto; padding: 14px 0 30px 0; justify-content: center; align-items: flex-end; border-bottom: 1px solid #ddd; margin-bottom: 32px; background: #fff;}
+    .exhibition-thumb-wrap { text-align: center; min-width: 70px;}
+    .exhibition-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; border: 2px solid #eee; transition: border 0.15s; cursor: pointer; display: block; margin: 0 auto 3px auto; background: #f6f6f6;}
+    .exhibition-thumb.active { border: 2.2px solid #000; box-shadow: 0 2px 8px #2222;}
+    .exhibition-number { display: block; text-align: center; font-size: 13px; color: #666; margin-top: 0;}
+    .exhibition-details { background: #fff; border-radius: 13px; padding: 28px 24px 32px 24px; box-shadow: 0 2px 14px #aaa3; margin: 0 0 32px 0;}
+    .exhibition-title { font-size: 1.25em; font-weight: bold; margin-bottom: 12px; color: #333;}
+    .exhibition-desc { font-size: 1.05em; color: #444; margin-bottom: 18px; white-space: pre-line;}
+    .gallery-row { display: flex; flex-wrap: wrap; gap: 13px;}
+    .gallery-img { width: 180px; height: 180px; object-fit: cover; border-radius: 9px; box-shadow: 0 1px 7px #0001; cursor: pointer; background: #f2f2f2; transition: transform 0.14s, box-shadow 0.14s;}
+    .gallery-img:hover { transform: scale(1.07); box-shadow: 0 3px 17px #2222;}
+    .lightbox-overlay { display: none; position: fixed; z-index: 99; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(32,32,44,0.91); align-items: center; justify-content: center; backdrop-filter: blur(6px); transition: background 0.2s;}
+    .lightbox-overlay.show { display: flex; animation: fadein 0.4s;}
+    @keyframes fadein { from { opacity: 0;} to { opacity: 1;}}
+    .lightbox-content { position: relative; max-width: 95vw; max-height: 87vh; display: flex; flex-direction: column; align-items: center; animation: popin 0.2s cubic-bezier(.31,.7,.66,1.43); user-select: none;}
+    @keyframes popin { from {transform: scale(0.98); opacity: 0.5;} to {transform: scale(1); opacity: 1;}}
+    .lightbox-img-wrap { position: relative; background: #fff; border-radius: 13px; max-width: 88vw; max-height: 63vh; overflow: hidden; box-shadow: 0 10px 44px #13161f7a; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; touch-action: pinch-zoom;}
+    .lightbox-img { max-width: 86vw; max-height: 61vh; border-radius: 13px; background: #fff; object-fit: contain; transition: box-shadow .18s; will-change: transform; cursor: grab; margin: 0 auto; display: block;}
+    .lightbox-caption { color: #fff; margin-bottom: 15px; font-size: 1.1em; text-align: center; text-shadow: 0 2px 12px #000a; max-width: 77vw; min-height: 1.5em;}
+    .lightbox-close, .lightbox-prev, .lightbox-next { position: absolute; border: none; background: rgba(32,32,44,0.75); color: #fff; border-radius: 50%; width: 38px; height: 38px; top: 7px; font-size: 1.55em; cursor: pointer; z-index: 2; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; transition: background .12s, transform .12s;}
+    .lightbox-close { right: 10px; font-size: 2em; top: -18px; background: #d00f; color: #fff;}
+    .lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); background: rgba(48,48,70,0.83); color: #fff; font-size: 1.7em; opacity: 0.87;}
+    .lightbox-prev:hover, .lightbox-next:hover { background: #333;}
     .lightbox-prev { left: -52px; }
     .lightbox-next { right: -52px;}
-    .lightbox-counter {
-      position: absolute;
-      right: 11px; bottom: 3px;
-      color: #fff;
-      background: rgba(38,38,50,.42);
-      padding: 2.5px 11px;
-      border-radius: 7px;
-      font-size: .95em;
-      font-family: inherit;
-      letter-spacing: 1.1px;
-      user-select: none;
-    }
-    /* Zoom control buttons */
-    .zoom-controls {
-      position: absolute;
-      left: 9px; bottom: 8px;
-      display: flex;
-      gap: 8px;
-      z-index: 4;
-    }
-    .zoom-btn {
-      background: rgba(255,255,255,.86);
-      color: #14213d;
-      border: none;
-      border-radius: 50%;
-      width: 33px; height: 33px;
-      font-size: 1.22em;
-      cursor: pointer;
-      transition: background .13s, transform .11s;
-      box-shadow: 0 1px 4px #0002;
-      display: flex; align-items: center; justify-content: center;
-      user-select: none;
-      outline: none;
-    }
+    .lightbox-counter { position: absolute; right: 11px; bottom: 3px; color: #fff; background: rgba(38,38,50,.42); padding: 2.5px 11px; border-radius: 7px; font-size: .95em; font-family: inherit; letter-spacing: 1.1px; user-select: none;}
+    .zoom-controls { position: absolute; left: 9px; bottom: 8px; display: flex; gap: 8px; z-index: 4;}
+    .zoom-btn { background: rgba(255,255,255,.86); color: #14213d; border: none; border-radius: 50%; width: 33px; height: 33px; font-size: 1.22em; cursor: pointer; transition: background .13s, transform .11s; box-shadow: 0 1px 4px #0002; display: flex; align-items: center; justify-content: center; user-select: none; outline: none;}
     .zoom-btn:active { background: #f2f2f2; }
-    @media (max-width: 770px){
-      .gallery-img { width: 44vw; height: 29vw;}
-      .lightbox-img-wrap { max-width: 99vw; max-height: 51vh;}
-      .lightbox-img { max-width: 98vw; max-height: 49vh;}
-      .lightbox-prev, .lightbox-next { left: 1vw; right: 1vw;}
-      .zoom-controls{left: 3vw;}
-    }
-    @media (max-width: 500px){
-      .container {padding: 0 1vw;}
-      .exhibition-details {padding: 7px 2vw;}
-      .lightbox-caption { font-size: .96em;}
-      .lightbox-img { max-height: 34vh;}
-    }
+    @media (max-width: 770px){ .gallery-img { width: 44vw; height: 29vw;} .lightbox-img-wrap { max-width: 99vw; max-height: 51vh;} .lightbox-img { max-width: 98vw; max-height: 49vh;} .lightbox-prev, .lightbox-next { left: 1vw; right: 1vw;} .zoom-controls{left: 3vw;}}
+    @media (max-width: 500px){ .container {padding: 0 1vw;} .exhibition-details {padding: 7px 2vw;} .lightbox-caption { font-size: .96em;} .lightbox-img { max-height: 34vh;} }
   </style>
 </head>
 <body>
@@ -276,75 +68,78 @@
     const exListDiv = document.getElementById('exhibitionList');
     const exDetailsDiv = document.getElementById('exhibitionDetails');
     let exhibitions = [];
-    let currentEx = null;
-    let images = [], captions = []; // for lightbox
-    let currentImgIdx = 0;
+    let currentEx = null, images = [], captions = [], currentImgIdx = 0;
 
-    function getExhibitionId() {
+    function getExhibitionFolder() {
       const urlParams = new URLSearchParams(location.search);
-      return urlParams.get('ex') || (exhibitions[0] || '1');
+      return urlParams.get('ex') || urlParams.get('exhibition') || null;
     }
 
-    // نمایش لیست نمایشگاه‌ها
-    function renderExhibitionList(activeEx) {
+    function renderExhibitionList(activeFolder) {
       exListDiv.innerHTML = '';
       exhibitions.forEach(ex => {
         const wrap = document.createElement('div');
         wrap.className = 'exhibition-thumb-wrap';
         const a = document.createElement('a');
-        a.href = `ExhibitionDetail.html?ex=${ex}`;
+        a.href = `ExhibitionDetail.html?ex=${encodeURIComponent(ex.folder)}`;
         const img = document.createElement('img');
-        img.className = 'exhibition-thumb' + (ex == activeEx ? ' active' : '');
-        img.src = `assets/Exhibition/${ex}/cover.jpg`;
-        img.alt = `Exhibition ${ex} Cover`;
+        img.className = 'exhibition-thumb' + (ex.folder === activeFolder ? ' active' : '');
+        img.src = `assets/Exhibition/${ex.cover}`;
+        img.alt = ex.title || ex.folder;
         img.onerror = function(){ this.src = 'assets/cover-placeholder.png'; };
         a.appendChild(img);
         wrap.appendChild(a);
         const label = document.createElement('span');
         label.className = 'exhibition-number';
-        label.textContent = ex;
+        label.textContent = ex.title || ex.folder;
         wrap.appendChild(label);
         exListDiv.appendChild(wrap);
       });
     }
 
-    // نمایش جزئیات نمایشگاه و مقادیر لازم برای لایت‌باکس
     function renderExhibitionDetail(ex) {
-      fetch(`assets/Exhibition/${ex}/description.txt`).then(r=> {
-        if (r.ok) return r.text();
-        else return Promise.resolve("");
-      }).then(desc => {
-        fetch(`assets/Exhibition/${ex}/list.php`).then(r=>r.json()).then(imgs=>{
-          images = imgs || [];
-          captions = images.map(i=>{return null}); // می‌تونی کپشن مخصوص بزاری
-          const imagesHtml = images.length > 0
-            ? `<div class="gallery-row">
-                ${images.map((img, idx) => `
-                  <img class="gallery-img" src="assets/Exhibition/${ex}/${img}" alt="Artwork ${idx+1}" onclick="openLightboxIndex(${idx})" loading="lazy">`
-                ).join('\n')}
-               </div>`
-            : `<p>No images found!</p>`;
-          exDetailsDiv.innerHTML = `
-            <div class="exhibition-title">Exhibition ${ex}</div>
-            <div class="exhibition-desc">${desc ? desc.replace(/\n/g, '<br>') : '<span style="color:#aaa">No description provided.</span>'}</div>
-            <div>${imagesHtml}</div>
-          `;
+      exDetailsDiv.innerHTML = `
+        <div class="exhibition-title">${ex.title || ex.folder}</div>
+        <div class="exhibition-desc" id="ex-desc">Loading description...</div>
+        <div id="galleryDiv"><p style="color:#888">Loading images...</p></div>`;
+      fetch(`assets/Exhibition/${ex.folder}/description.txt`)
+        .then(r=>r.ok?r.text():"")
+        .then(desc=>{
+          document.getElementById("ex-desc").innerHTML = desc ? desc.replace(/\n/g,'<br>') : '<span style="color:#aaa">No description provided.</span>';
         });
-      });
+      const galleryDiv = document.getElementById('galleryDiv');
+      images = ex.images || [];
+      captions = images.map(() => null);
+      if (images.length){
+        galleryDiv.innerHTML = `<div class="gallery-row">${
+          images.map((img, idx) =>
+            `<img class="gallery-img" src="assets/Exhibition/${img}" alt="Artwork ${idx+1}" onclick="openLightboxIndex(${idx})" loading="lazy">`
+          ).join('')
+        }</div>`;
+      } else {
+        galleryDiv.innerHTML = `<p>No artworks found in this exhibition.</p>`;
+      }
     }
-
-    // بارگذاری نمایشگاه‌ها
+    // Load data
     fetch('assets/Exhibition/list.php')
       .then(r=>r.json())
-      .then(exs=>{
-        exhibitions = exs.sort((a,b)=>parseInt(a)-parseInt(b));
-        currentEx = getExhibitionId();
-        if (!exhibitions.includes(currentEx)) currentEx = exhibitions[0];
-        renderExhibitionList(currentEx);
-        renderExhibitionDetail(currentEx);
+      .then(list=>{
+        exhibitions = list;
+        let exFolder = getExhibitionFolder();
+        if (!exFolder || !exhibitions.find(e => e.folder === exFolder)) exFolder = exhibitions[0]?.folder;
+        currentEx = exhibitions.find(e => e.folder === exFolder);
+        renderExhibitionList(exFolder);
+        if(currentEx){
+          renderExhibitionDetail(currentEx);
+        }else{
+          exDetailsDiv.innerHTML = `<div style="color:#d33;font-size:1.2em;">Exhibition not found.</div>`;
+        }
+      })
+      .catch(()=>{
+        exListDiv.innerHTML = "<div style='color:#e33'>Could not load exhibitions.</div>";
       });
 
-    // --- Lightbox with ZOOM --- //
+    // Lightbox controls as before...
     const lightbox = document.getElementById('lightbox');
     const lImg = document.getElementById('lightboxImg');
     const lCap = document.getElementById('lightboxCap');
@@ -353,18 +148,8 @@
     document.querySelector('.lightbox-prev').onclick = prevImage;
     document.querySelector('.lightbox-next').onclick = nextImage;
 
-    // --- ZOOM control states
-    let zoom = 1.0,
-        panX = 0,
-        panY = 0,
-        isPanning = false,
-        startX = 0,
-        startY = 0,
-        startPanX = 0,
-        startPanY = 0,
-        lastTouchDist = null;
+    let zoom = 1.0, panX = 0, panY = 0, isPanning = false, startX = 0, startY = 0, startPanX = 0, startPanY = 0, lastTouchDist = null;
 
-    // Main open lightbox
     window.openLightboxIndex = function(idx) {
       if (!images.length) return;
       currentImgIdx = idx;
@@ -372,18 +157,16 @@
     }
 
     function showLightbox(){
-      zoom = 1; panX = 0; panY = 0; // reset
-      imgWrap.style.cursor = "grab";
+      zoom = 1; panX = 0; panY = 0; imgWrap.style.cursor = "grab";
       updateLightbox();
       lightbox.classList.add('show');
       document.body.style.overflow = 'hidden';
       setTimeout(()=>lImg.focus(),120);
     }
-
     function updateLightbox(){
       if (!images.length) return;
       const img = images[currentImgIdx];
-      lImg.src = `assets/Exhibition/${currentEx}/${img}`;
+      lImg.src = `assets/Exhibition/${img}`;
       lImg.alt = img;
       lCap.textContent = captions[currentImgIdx] || '';
       lCount.textContent = `${currentImgIdx+1} / ${images.length}`;
@@ -391,7 +174,6 @@
       document.querySelector('.lightbox-next').style.display = images.length>1 ? 'flex':'none';
       applyZoom();
     }
-
     function prevImage(){
       if (!images.length) return;
       currentImgIdx = (currentImgIdx-1+images.length) % images.length;
@@ -410,14 +192,9 @@
       document.body.style.overflow = '';
       zoom = 1; panX = panY = 0; applyZoom();
     }
-
-    // --------- ZOOM FUNCTIONS -----------
-    function applyZoom(){
-      lImg.style.transform = `scale(${zoom}) translate(${panX/zoom}px,${panY/zoom}px)`;
-    }
+    function applyZoom(){ lImg.style.transform = `scale(${zoom}) translate(${panX/zoom}px,${panY/zoom}px)`;}
     function clampZoom(z){ return Math.min(4, Math.max(1, z)); }
     function clampPan(px, py){
-      // prevent pan too far (for aesthetics)
       let boundsX = (zoom-1)*lImg.width/2;
       let boundsY = (zoom-1)*lImg.height/2;
       return [
@@ -434,16 +211,14 @@
     document.getElementById('zoomResetBtn').onclick = ()=>{
       zoom = 1; panX = 0; panY = 0; applyZoom();
     }
-    // Mouse wheel zoom
     imgWrap.onwheel = function(e){
-      if (e.ctrlKey) return; // browser zoom
+      if (e.ctrlKey) return;
       e.preventDefault();
       let newZoom = clampZoom(zoom + (e.deltaY < 0 ? 0.15 : -0.15));
       zoom = newZoom;
       panX = panY = 0;
       applyZoom();
     };
-    // Mouse drag pan (when zoomed)
     lImg.onmousedown = function(e){
       if (zoom <= 1) return;
       isPanning = true;
@@ -461,8 +236,6 @@
     };
     window.onmouseup = function(){ isPanning = false; imgWrap.style.cursor = "grab"; };
     imgWrap.onmouseleave = function(){ isPanning = false; imgWrap.style.cursor = "grab"; };
-
-    // --- Touch zoom (for basic pinch-to-zoom on mobile)
     imgWrap.addEventListener('touchstart', function(e){
       if (e.touches.length == 2){
         lastTouchDist = Math.hypot(
@@ -498,8 +271,6 @@
       lastTouchDist = null; isPanning = false;
       imgWrap.style.cursor = "grab";
     });
-
-    // Keyboard + clicking outside for UX
     lightbox.addEventListener('click', function(e){
       if (e.target === this) closeLightbox();
     });
@@ -512,7 +283,6 @@
       if (e.key==="-" || e.key==="_") { zoom = clampZoom(zoom-0.16); panX = panY = 0; applyZoom(); }
       if (e.key==="0") { zoom = 1; panX = panY = 0; applyZoom(); }
     });
-
   </script>
 </body>
 </html>
