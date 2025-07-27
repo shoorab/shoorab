@@ -47,8 +47,6 @@
       text-align: center;
       font-weight: 400;
     }
-
-    /* =====================  Main hero with hover info  =============== */
     .hero-center-container {
       width: 100%;
       display: flex;
@@ -98,7 +96,6 @@
       background: rgba(22,22,22,0.05);
       pointer-events: none;
     }
-    /* Hover text box */
     .hover-text-box {
       display: none;
       opacity: 0;
@@ -136,7 +133,6 @@
       border-color: transparent #fff transparent transparent;
       filter: drop-shadow(0 2px 8px #18181815);
     }
-    /* Responsive: Stack textbox below image on mobile */
     @media (max-width: 900px) {
       .hero-image-box { width: 98vw; max-width: 99vw; border-radius: 13px;}
       .artist-title { font-size: 1.13rem;}
@@ -211,6 +207,46 @@
       color: var(--accent);
       text-decoration: underline;
     }
+    #gallery {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    #gallery section {
+      margin-bottom: 30px;
+      width: 90%;
+      max-width: 1024px;
+      border-bottom: 1px solid #ececec;
+      padding-bottom: 14px;
+    }
+    #gallery h3 {
+      margin: 20px 0 12px 0;
+      font-size: 1.38em;
+      font-weight: 700;
+      color: #222;
+      letter-spacing: 0.03em;
+      border-right: 5px solid #c6af29;
+      padding-right: 16px;
+      display: inline-block;
+    }
+    #gallery img {
+      border-radius: 8px;
+      box-shadow: 0 3px 18px #0001;
+      margin: 7px;
+      max-width: 180px;
+      max-height: 170px;
+      object-fit: cover;
+      background: #f9f9f9;
+      vertical-align: middle;
+      transition: box-shadow 0.2s;
+    }
+    #gallery img:hover {
+      box-shadow: 0 6px 38px #e4c5172a, 0 2px 10px #0003;
+      outline: 2px solid #c6af29;
+      z-index: 9;
+    }
     footer {
       margin-top: auto;
       background: var(--primary);
@@ -223,6 +259,7 @@
   </style>
 </head>
 <body>
+  <!-- هدر و اینترو -->
   <header>
     <div class="artist-title">Hossein Shoorab</div>
     <div class="artist-subtitle">Contemporary Artist</div>
@@ -235,32 +272,70 @@
         <div class="hover-text-box">
           <strong>Short Bio</strong> <br>
           Hossein Shoorab (b. 1998, Tehran) is a contemporary Iranian artist whose work is inspired by water and the abstract forms of Iran’s historic qanats,
-           expressing environmental and cultural concerns through abstraction. He explores Iranian water heritage and qanats from various perspectives,
+            expressing environmental and cultural concerns through abstraction. He explores Iranian water heritage and qanats from various perspectives,
             aiming to draw attention to their significance. For him, art is a means of expression 
           beyond the limits of any single medium, and his practice is interdisciplinary.
-<br><br>
-          <em></em>
+          <br><br>
         </div>
       </div>
     </div>
-    <!-- Picasso Quote -->
     <div class="picasso-quote">
-      "“Every act of creation is first an act of destruction."
+      "Every act of creation is first an act of destruction."
       <span class="author">&mdash; Picasso</span>
     </div>
   </header>
+  
+  <!-- منو سایت -->
   <nav>
     <a href="about.html">About</a>
     <a href="menu.html">Works</a>
     <a href="privacy.html">Privacy Policy</a>
   </nav>
+  
+  <!-- شبکه‌های اجتماعی -->
   <div class="socials">
     <a href="https://instagram.com/shoorrab" target="_blank">Instagram</a>
     <a href="mailto:shoorab1998@gmail.com">Email</a>
     <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
   </div>
+
+  <!-- گالری تصاویر اتوماتیک -->
+  <div id="gallery"></div>
+
+  <!-- فوتر سایت -->
   <footer>
     &copy; 2025 Hossein Shoorab
   </footer>
+
+  <!-- اسکریپت بارگذاری تصاویر از list.json -->
+  <script>
+    fetch('list.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to load JSON');
+        return response.json();
+      })
+      .then(galleries => {
+        const container = document.getElementById('gallery');
+        if (!galleries.length) {
+          container.textContent = 'عکسی پیدا نشد.';
+          return;
+        }
+        galleries.forEach(gal => {
+          const section = document.createElement('section');
+          section.innerHTML = `<h3>${gal.title}</h3>`;
+          (gal.images || []).forEach(img => {
+            const imgEl = document.createElement('img');
+            imgEl.src = encodeURI(img); // در صورت کاراکتر فارسی یا اسپیس
+            imgEl.alt = gal.title;
+            imgEl.onerror = () => { imgEl.src = 'noimg.png'; };
+            section.appendChild(imgEl);
+          });
+          container.appendChild(section);
+        });
+      })
+      .catch(() => {
+        document.getElementById('gallery').textContent = 'خطا در بارگذاری عکس‌ها';
+      });
+  </script>
 </body>
 </html>
